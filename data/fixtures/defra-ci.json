@@ -1,0 +1,14 @@
+{
+  "farmer@example.com": {
+    "sub": "00000000-0000-0000-0000-000000000002",
+    "name": "Test Farmer"
+  },
+  "oakfield.farmer@oakhill-farms.co.uk": {
+    "sub": "cd91b1e0-bae4-4cee-becf-3529cc557311",
+    "name": "Oakfield Farmer"
+  },
+  "fairfield.farmer@fairfield-farms.co.uk": {
+    "sub": "52b36302-6b7c-48e7-a386-b7bf81bd8911",
+    "name": "Fairfield Farmer"
+  }
+}
