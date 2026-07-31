@@ -107,6 +107,9 @@ export function createOidcFakePlugin({
     return Object.keys(users).map((email, index) => ({
       value: email,
       text: `${users[email].name} (${email})`,
+      hint: users[email].description
+        ? { text: users[email].description }
+        : undefined,
       checked: selectedEmail ? email === selectedEmail : index === 0
     }))
   }
