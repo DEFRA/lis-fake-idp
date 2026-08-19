@@ -14,33 +14,22 @@ describe('createServer()', () => {
     expect(response.result).toEqual({ message: 'success' })
   })
 
-  test('it serves the DEFRA CI fake discovery document', async () => {
-    // Arrange
-    const server = await createServer()
+  test.each(['defra-ci', 'entra-id'])(
+    'it serves the %s fake discovery document',
+    async (mountPath) => {
+      // Arrange
+      const server = await createServer()
 
-    // Act
-    const response = await server.inject({
-      method: 'GET',
-      url: '/defra-ci/.well-known/openid-configuration'
-    })
+      // Act
+      const response = await server.inject({
+        method: 'GET',
+        url: `/${mountPath}/.well-known/openid-configuration`
+      })
 
-    // Assert
-    expect(response.statusCode).toBe(200)
-  })
-
-  test('it serves the Entra ID fake discovery document', async () => {
-    // Arrange
-    const server = await createServer()
-
-    // Act
-    const response = await server.inject({
-      method: 'GET',
-      url: '/entra-id/.well-known/openid-configuration'
-    })
-
-    // Assert
-    expect(response.statusCode).toBe(200)
-  })
+      // Assert
+      expect(response.statusCode).toBe(200)
+    }
+  )
 
   test('it returns 204 with no content type asserted from the favicon route', async () => {
     // Arrange
