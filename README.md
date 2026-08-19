@@ -1,6 +1,6 @@
-# lis-fake-service
+# lis-fake-idp
 
-Fakes upstream identity/data dependencies for LIS local development and CDP's deployed "dev" pre-production environment. One app, one endpoint per faked service.
+Fakes upstream OIDC identity providers for LIS local development and CDP's deployed "dev" pre-production environment, so OIDC auth flows work without live upstream coupling. One app, one endpoint per faked provider.
 
 Currently fakes:
 
@@ -49,7 +49,6 @@ src/
 │   │   │   └── logging/            # pino + ECS format
 │   │   ├── templates/layouts/      # page-base.njk (GOV.UK template), page.njk
 │   │   └── components/heading/     # Custom appHeading macro
-│   ├── home/                   # Lists the available faked services
 │   ├── health/                 # GET /health
 │   ├── oidc-fake/              # Shared OIDC-provider plugin factory + login template
 │   ├── entra-id/               # Entra ID fake — instantiates oidc-fake at /entra-id
