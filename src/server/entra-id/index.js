@@ -1,7 +1,7 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { config } from '../../config/config.js'
-import { createOidcFakePlugin } from '../oidc-fake/create-oidc-fake-plugin.js'
+import { createOidcFakePlugin } from '../oidc-fake/index.js'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -13,5 +13,7 @@ export const entraId = createOidcFakePlugin({
   getExternalBase: () =>
     config.get('oidcFakes.entraId.externalBase') ??
     config.get('oidcFakes.entraId.internalBase'),
-  getInternalBase: () => config.get('oidcFakes.entraId.internalBase')
+  getInternalBase: () => config.get('oidcFakes.entraId.internalBase'),
+  clientId: config.get('oidcFakes.entraId.clientId'),
+  clientSecret: config.get('oidcFakes.entraId.clientSecret')
 })

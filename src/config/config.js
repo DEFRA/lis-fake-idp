@@ -116,6 +116,19 @@ export const config = convict({
         format: String,
         default: 'http://localhost:3000/entra-id',
         env: 'ENTRA_ID_INTERNAL_BASE'
+      },
+      clientId: {
+        doc: 'Registered client id the Entra ID fake accepts at the token endpoint',
+        format: String,
+        default: 'back-office-client',
+        env: 'ENTRA_ID_CLIENT_ID'
+      },
+      clientSecret: {
+        doc: 'Registered client secret the Entra ID fake requires at the token endpoint',
+        format: String,
+        default: 'local-dev-entra-id-client-secret-please-change',
+        env: 'ENTRA_ID_CLIENT_SECRET',
+        sensitive: true
       }
     },
     defraCi: {
@@ -131,6 +144,19 @@ export const config = convict({
         format: String,
         default: 'http://localhost:3000/defra-ci',
         env: 'DEFRA_CI_INTERNAL_BASE'
+      },
+      clientId: {
+        doc: 'Registered client id the DEFRA CI fake accepts at the token endpoint',
+        format: String,
+        default: 'front-office-client',
+        env: 'DEFRA_CI_CLIENT_ID'
+      },
+      clientSecret: {
+        doc: 'Registered client secret the DEFRA CI fake requires at the token endpoint',
+        format: String,
+        default: 'local-dev-defra-ci-client-secret-please-change',
+        env: 'DEFRA_CI_CLIENT_SECRET',
+        sensitive: true
       }
     }
   }

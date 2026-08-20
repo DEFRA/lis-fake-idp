@@ -1,7 +1,7 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { config } from '../../config/config.js'
-import { createOidcFakePlugin } from '../oidc-fake/create-oidc-fake-plugin.js'
+import { createOidcFakePlugin } from '../oidc-fake/index.js'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -13,5 +13,7 @@ export const defraCi = createOidcFakePlugin({
   getExternalBase: () =>
     config.get('oidcFakes.defraCi.externalBase') ??
     config.get('oidcFakes.defraCi.internalBase'),
-  getInternalBase: () => config.get('oidcFakes.defraCi.internalBase')
+  getInternalBase: () => config.get('oidcFakes.defraCi.internalBase'),
+  clientId: config.get('oidcFakes.defraCi.clientId'),
+  clientSecret: config.get('oidcFakes.defraCi.clientSecret')
 })
