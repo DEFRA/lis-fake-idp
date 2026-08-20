@@ -29,7 +29,7 @@ export const config = convict({
   serviceName: {
     doc: 'Service name shown in the GOV.UK header',
     format: String,
-    default: 'Livestock fake service'
+    default: 'Livestock fake IDP'
   },
   root: {
     doc: 'Project root',
@@ -131,64 +131,6 @@ export const config = convict({
         format: String,
         default: 'http://localhost:3000/defra-ci',
         env: 'DEFRA_CI_INTERNAL_BASE'
-      }
-    }
-  },
-  identityServiceHelper: {
-    apiKey: {
-      doc: 'x-api-key value the fake identity-service-helper endpoints require, matching its real ApiKeyValidationMiddleware',
-      format: String,
-      default: 'local-dev-identity-service-helper-key',
-      env: 'IDENTITY_SERVICE_HELPER_API_KEY'
-    }
-  },
-  ctsWs: {
-    dthUsername: {
-      doc: 'TransferDataHex envelope username the fake cts_ws endpoint requires',
-      format: String,
-      default: 'local-dev-dth-username',
-      env: 'CTS_WS_DTH_USERNAME'
-    },
-    dthPassword: {
-      doc: 'TransferDataHex envelope password the fake cts_ws endpoint requires (sent MD5-hashed by callers, matching the real service)',
-      format: String,
-      default: 'local-dev-dth-password',
-      env: 'CTS_WS_DTH_PASSWORD',
-      sensitive: true
-    },
-    ctsOlUsername: {
-      doc: 'CTS_OL_User username the fake cts_ws operations require - must be <=11 chars to fit the real CTSOL_UserId_Type XSD constraint',
-      format: String,
-      default: 'dev-cts-usr',
-      env: 'CTS_WS_CTS_OL_USERNAME'
-    },
-    ctsOlPassword: {
-      doc: 'CTS_OL_User password the fake cts_ws operations require - must be <=15 chars to fit the real CTSOL_Password_Type XSD constraint',
-      format: String,
-      default: 'dev-cts-pass123',
-      env: 'CTS_WS_CTS_OL_PASSWORD',
-      sensitive: true
-    },
-    serviceUnavailableProbability: {
-      doc: "Probability (0-1) that any TransferDataHex request returns CTWS809 (service unavailable), simulating the real service's occasional outages. 0 disables it.",
-      format: Number,
-      default: 0.05,
-      env: 'CTS_WS_SERVICE_UNAVAILABLE_PROBABILITY'
-    },
-    births: {
-      maxValidationDelaySeconds: {
-        doc: "Upper bound (inclusive) of the random delay, in seconds, before a Register_Births_Asynchronous submission's results become available, simulating the real CTS async proving turnaround.",
-        format: 'nat',
-        default: 5,
-        env: 'CTS_WS_BIRTHS_MAX_VALIDATION_DELAY_SECONDS'
-      }
-    },
-    movements: {
-      maxValidationDelaySeconds: {
-        doc: "Upper bound (inclusive) of the random delay, in seconds, before a Register_Movements_Asynchronous submission's results become available, simulating the real CTS async proving turnaround.",
-        format: 'nat',
-        default: 5,
-        env: 'CTS_WS_MOVEMENTS_MAX_VALIDATION_DELAY_SECONDS'
       }
     }
   }
