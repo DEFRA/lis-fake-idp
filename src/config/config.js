@@ -126,7 +126,7 @@ export const config = convict({
       clientSecret: {
         doc: 'Registered client secret the Entra ID fake requires at the token endpoint',
         format: String,
-        default: 'local-dev-entra-id-client-secret-please-change',
+        default: 'back-office-client-secret',
         env: 'ENTRA_ID_CLIENT_SECRET',
         sensitive: true
       }
@@ -154,7 +154,7 @@ export const config = convict({
       clientSecret: {
         doc: 'Registered client secret the DEFRA CI fake requires at the token endpoint',
         format: String,
-        default: 'local-dev-defra-ci-client-secret-please-change',
+        default: 'front-office-client-secret',
         env: 'DEFRA_CI_CLIENT_SECRET',
         sensitive: true
       }
