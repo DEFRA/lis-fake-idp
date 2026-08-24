@@ -11,16 +11,10 @@
     "roles": [],
     "description": "Corporate user with no assigned back-office role"
   },
-  "jane.supervisor@defra.gov.uk": {
-    "sub": "4e5d3b4d-5f5f-4fcb-a0e4-5d9a8d3b6f5b",
-    "name": "Jane Supervisor",
-    "roles": ["bcms_user", "bcms_supervisor"],
-    "description": "Back-office user with supervisor permissions"
-  },
-  "rachel.manager@defra.gov.uk": {
-    "sub": "4e5d3b4d-5f5f-4fcb-a0e4-5d9a8d3b6f5c",
-    "name": "Rachel Manager",
-    "roles": ["bcms_user", "bcms_supervisor", "bcms_admin"],
-    "description": "Back-office user with supervisor and admin permissions"
+  "norman.o.robertson@defra.gov.uk": {
+    "sub": "4e5d3b4d-5f5f-4fcb-a0e4-5d9a8d3b6f5e",
+    "name": "Norman O Robertson",
+    "roles": ["test_nor_issuer"],
+    "description": "Internal test role"
   }
 }
