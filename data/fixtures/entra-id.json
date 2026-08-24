@@ -5,6 +5,12 @@
     "roles": ["bcms_user"],
     "description": "Standard back-office user"
   },
+  "no.role@defra.gov.uk": {
+    "sub": "4e5d3b4d-5f5f-4fcb-a0e4-5d9a8d3b6f5d",
+    "name": "No Role",
+    "roles": [],
+    "description": "Corporate user with no assigned back-office role"
+  },
   "jane.supervisor@defra.gov.uk": {
     "sub": "4e5d3b4d-5f5f-4fcb-a0e4-5d9a8d3b6f5b",
     "name": "Jane Supervisor",
