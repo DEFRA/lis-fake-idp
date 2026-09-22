@@ -10,6 +10,15 @@ const users = {
   }
 }
 
+const cookieName = 'oidc-fake-session-test'
+const cookieOptions = { path: '/test' }
+
+function makeRedirectToolkit() {
+  const response = { state: vi.fn(() => 'redirected') }
+  const h = { redirect: vi.fn(() => response), result: response }
+  return h
+}
+
 describe('createAuthorizePostHandler()', () => {
   test('it stores an authorization code and redirects with it plus the original state', () => {
     // Arrange
@@ -17,7 +26,9 @@ describe('createAuthorizePostHandler()', () => {
     const handler = createAuthorizePostHandler({
       label: 'Test IDP',
       users,
-      codeStore
+      codeStore,
+      cookieName,
+      cookieOptions
     })
     const request = {
       payload: {
@@ -29,12 +40,17 @@ describe('createAuthorizePostHandler()', () => {
         code_challenge_method: 'S256'
       }
     }
-    const h = { redirect: vi.fn(() => 'redirected') }
+    const h = makeRedirectToolkit()
 
     // Act
     const result = handler(request, h)
 
     // Assert
+    expect(h.result.state).toHaveBeenCalledWith(
+      cookieName,
+      'farmer@example.com',
+      cookieOptions
+    )
     expect(codeStore.storeCode).toHaveBeenCalledWith(
       expect.any(String),
       expect.objectContaining({
@@ -73,7 +89,7 @@ describe('createAuthorizePostHandler()', () => {
         code_challenge_method: 'S256'
       }
     }
-    const h = { redirect: vi.fn(() => 'redirected') }
+    const h = makeRedirectToolkit()
 
     // Act
     handler(request, h)
@@ -91,7 +107,9 @@ describe('createAuthorizePostHandler()', () => {
     const handler = createAuthorizePostHandler({
       label: 'Test IDP',
       users,
-      codeStore
+      codeStore,
+      cookieName,
+      cookieOptions
     })
     const request = {
       payload: {

@@ -1,23 +1,23 @@
-import crypto from 'node:crypto'
 import { buildUserItems } from './build-user-items.js'
-
-const AUTH_CODE_BYTE_LENGTH = 32
+import {
+  buildCodeRedirect,
+  readAuthorizationParams
+} from './authorization-redirect.js'
 
 /**
- * @param {{ label: string, users: object, codeStore: object }} options
+ * @param {{ label: string, users: object, codeStore: object, cookieName: string, cookieOptions: object }} options
  * @returns {Function}
  */
-export function createAuthorizePostHandler({ label, users, codeStore }) {
+export function createAuthorizePostHandler({
+  label,
+  users,
+  codeStore,
+  cookieName,
+  cookieOptions
+}) {
   return function authorizePostHandler(request, h) {
-    const {
-      email,
-      state,
-      nonce,
-      redirect_uri: redirectUri,
-      code_challenge: codeChallenge,
-      code_challenge_method: codeChallengeMethod
-    } = request.payload
-
+    const { email } = request.payload
+    const params = readAuthorizationParams(request.payload)
     const user = users[email]
 
     if (!user) {
@@ -25,29 +25,17 @@ export function createAuthorizePostHandler({ label, users, codeStore }) {
         pageTitle: `Sign in — ${label}`,
         label,
         userItems: buildUserItems(users, email),
-        state,
-        nonce,
-        redirect_uri: redirectUri,
-        code_challenge: codeChallenge,
-        code_challenge_method: codeChallengeMethod,
+        state: params.state,
+        nonce: params.nonce,
+        redirect_uri: params.redirectUri,
+        code_challenge: params.codeChallenge,
+        code_challenge_method: params.codeChallengeMethod,
         error: `No fixture user found with email ${email}`
       })
     }
 
-    const code = crypto.randomBytes(AUTH_CODE_BYTE_LENGTH).toString('hex')
-    codeStore.storeCode(code, {
-      sub: user.sub,
-      email,
-      name: user.name,
-      roles: user.roles ?? [],
-      nonce,
-      codeChallenge,
-      codeChallengeMethod
-    })
-
-    const redirectUrl = new URL(redirectUri)
-    redirectUrl.searchParams.set('code', code)
-    redirectUrl.searchParams.set('state', state)
-    return h.redirect(redirectUrl.href)
+    return h
+      .redirect(buildCodeRedirect({ codeStore, user, email, params }))
+      .state(cookieName, email, cookieOptions)
   }
 }

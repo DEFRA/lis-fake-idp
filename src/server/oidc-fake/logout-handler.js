@@ -1,16 +1,16 @@
 import { statusCodes } from '../common/constants/status-codes.js'
 
 /**
- * @param {object} request
- * @param {object} h
- * @returns {unknown}
+ * @param {{ cookieName: string, cookieOptions: object }} options
+ * @returns {Function}
  */
-export function logoutHandler(request, h) {
-  const { post_logout_redirect_uri: postLogoutRedirectUri } = request.query
+export function createLogoutHandler({ cookieName, cookieOptions }) {
+  return function logoutHandler(request, h) {
+    const { post_logout_redirect_uri: postLogoutRedirectUri } = request.query
+    const response = postLogoutRedirectUri
+      ? h.redirect(postLogoutRedirectUri)
+      : h.response().code(statusCodes.noContent)
 
-  if (postLogoutRedirectUri) {
-    return h.redirect(postLogoutRedirectUri)
+    return response.unstate(cookieName, cookieOptions)
   }
-
-  return h.response().code(statusCodes.noContent)
 }
