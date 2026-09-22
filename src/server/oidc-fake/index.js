@@ -5,7 +5,9 @@ import { createAuthorizePostHandler } from './authorize-post-handler.js'
 import { createCodeStore } from './code-store.js'
 import { createDiscoveryHandler } from './discovery-handler.js'
 import { createJwksHandler } from './jwks-handler.js'
+import { createLogoutHandler } from './logout-handler.js'
 import { buildRoutes } from './routes.js'
+import { createSessionCookieOptions, getSessionCookieName } from './session.js'
 import { createTokenHandler } from './token-handler.js'
 
 const RSA_MODULUS_LENGTH = 2048
@@ -43,18 +45,28 @@ export function createOidcFakePlugin({
   const signingKey = { privateKey, keyId }
   const users = JSON.parse(readFileSync(fixturePath, 'utf-8'))
   const codeStore = createCodeStore()
+  const cookieName = getSessionCookieName(name)
+  const cookieOptions = createSessionCookieOptions({ mountPath })
 
   const discoveryHandler = createDiscoveryHandler({
     getExternalBase,
     getInternalBase
   })
   const jwksHandler = createJwksHandler({ publicKey, keyId })
-  const authorizeGetHandler = createAuthorizeGetHandler({ label, users })
+  const authorizeGetHandler = createAuthorizeGetHandler({
+    label,
+    users,
+    codeStore,
+    cookieName
+  })
   const authorizePostHandler = createAuthorizePostHandler({
     label,
     users,
-    codeStore
+    codeStore,
+    cookieName,
+    cookieOptions
   })
+  const logoutHandler = createLogoutHandler({ cookieName, cookieOptions })
   const tokenHandler = createTokenHandler({
     getInternalBase,
     signingKey,
@@ -67,6 +79,7 @@ export function createOidcFakePlugin({
     plugin: {
       name,
       register(server) {
+        server.state(cookieName, cookieOptions)
         server.route(
           buildRoutes({
             mountPath,
@@ -75,7 +88,8 @@ export function createOidcFakePlugin({
               jwksHandler,
               authorizeGetHandler,
               authorizePostHandler,
-              tokenHandler
+              tokenHandler,
+              logoutHandler
             }
           })
         )

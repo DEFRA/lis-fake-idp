@@ -10,7 +10,8 @@ describe('buildRoutes()', () => {
       jwksHandler: vi.fn(),
       authorizeGetHandler: vi.fn(),
       authorizePostHandler: vi.fn(),
-      tokenHandler: vi.fn()
+      tokenHandler: vi.fn(),
+      logoutHandler: vi.fn()
     }
 
     // Act

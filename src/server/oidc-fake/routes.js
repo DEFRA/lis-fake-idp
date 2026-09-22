@@ -1,5 +1,3 @@
-import { logoutHandler } from './logout-handler.js'
-
 /**
  * @param {{ mountPath: string, handlers: object }} options
  * @returns {Array<object>}
@@ -10,7 +8,8 @@ export function buildRoutes({ mountPath, handlers }) {
     jwksHandler,
     authorizeGetHandler,
     authorizePostHandler,
-    tokenHandler
+    tokenHandler,
+    logoutHandler
   } = handlers
 
   return [

@@ -7,6 +7,7 @@ import { createCodeStore } from './code-store.js'
 import { createDiscoveryHandler } from './discovery-handler.js'
 import { createOidcFakePlugin } from './index.js'
 import { createJwksHandler } from './jwks-handler.js'
+import { createLogoutHandler } from './logout-handler.js'
 import { buildRoutes } from './routes.js'
 import { createTokenHandler } from './token-handler.js'
 
@@ -16,6 +17,7 @@ vi.mock('./authorize-post-handler.js')
 vi.mock('./code-store.js')
 vi.mock('./discovery-handler.js')
 vi.mock('./jwks-handler.js')
+vi.mock('./logout-handler.js')
 vi.mock('./routes.js')
 vi.mock('./token-handler.js')
 
@@ -26,6 +28,7 @@ const mocks = {
   createCodeStore: vi.mocked(createCodeStore),
   createDiscoveryHandler: vi.mocked(createDiscoveryHandler),
   createJwksHandler: vi.mocked(createJwksHandler),
+  createLogoutHandler: vi.mocked(createLogoutHandler),
   buildRoutes: vi.mocked(buildRoutes),
   createTokenHandler: vi.mocked(createTokenHandler)
 }
@@ -37,6 +40,7 @@ describe('createOidcFakePlugin()', () => {
     vi.clearAllMocks()
     mocks.readFileSync.mockReturnValue(JSON.stringify(users))
     mocks.createCodeStore.mockReturnValue({ codeStore: true })
+    mocks.createLogoutHandler.mockReturnValue('logout-handler')
     mocks.createDiscoveryHandler.mockReturnValue('discovery-handler')
     mocks.createJwksHandler.mockReturnValue('jwks-handler')
     mocks.createAuthorizeGetHandler.mockReturnValue('authorize-get-handler')
@@ -67,10 +71,13 @@ describe('createOidcFakePlugin()', () => {
       '/fixtures/test-idp.json',
       'utf-8'
     )
-    expect(mocks.createAuthorizeGetHandler).toHaveBeenCalledWith({
-      label: 'Test IDP',
-      users
-    })
+    expect(mocks.createAuthorizeGetHandler).toHaveBeenCalledWith(
+      expect.objectContaining({
+        label: 'Test IDP',
+        users,
+        cookieName: 'oidc-fake-session-test-idp'
+      })
+    )
     expect(mocks.createAuthorizePostHandler).toHaveBeenCalledWith(
       expect.objectContaining({ label: 'Test IDP', users })
     )
@@ -113,7 +120,7 @@ describe('createOidcFakePlugin()', () => {
   test('it registers the routes built from the wired handlers', () => {
     // Arrange
     const { plugin } = createOidcFakePlugin(makeOptions())
-    const server = { route: vi.fn() }
+    const server = { route: vi.fn(), state: vi.fn() }
 
     // Act
     plugin.register(server)
@@ -126,7 +133,8 @@ describe('createOidcFakePlugin()', () => {
         jwksHandler: 'jwks-handler',
         authorizeGetHandler: 'authorize-get-handler',
         authorizePostHandler: 'authorize-post-handler',
-        tokenHandler: 'token-handler'
+        tokenHandler: 'token-handler',
+        logoutHandler: 'logout-handler'
       }
     })
     expect(server.route).toHaveBeenCalledWith(['route-1', 'route-2'])
