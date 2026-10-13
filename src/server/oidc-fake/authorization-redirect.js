@@ -30,6 +30,8 @@ export function buildCodeRedirect({ codeStore, user, email, params }) {
     sub: user.sub,
     email,
     name: user.name,
+    firstName: user.firstName,
+    lastName: user.lastName,
     roles: user.roles ?? [],
     nonce: params.nonce,
     codeChallenge: params.codeChallenge,
