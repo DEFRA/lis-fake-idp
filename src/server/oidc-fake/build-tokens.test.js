@@ -19,6 +19,8 @@ describe('buildTokens()', () => {
       sub: 'user-1',
       nonce: 'nonce-1',
       name: 'Test Farmer',
+      firstName: 'Test',
+      lastName: 'Farmer',
       email: 'farmer@example.com',
       roles: ['lis-role-reader']
     }
@@ -40,6 +42,8 @@ describe('buildTokens()', () => {
         aud: 'test-client',
         nonce: 'nonce-1',
         name: 'Test Farmer',
+        firstName: 'Test',
+        lastName: 'Farmer',
         email: 'farmer@example.com',
         roles: ['lis-role-reader']
       })

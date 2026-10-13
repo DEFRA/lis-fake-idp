@@ -2,16 +2,22 @@
   "defralivestock+noholdings@gmail.com": {
     "sub": "e8e9a3d2-d9ba-4c49-b293-09288434c748",
     "name": "Test Farmer",
+    "firstName": "Test",
+    "lastName": "Farmer",
     "description": "User with no linked holdings"
   },
   "defralivestock+oakfield@gmail.com": {
     "sub": "3a6f0e9b-fc47-4537-b904-8b98a88a67fe",
     "name": "Oakfield Farmer",
+    "firstName": "Oakfield",
+    "lastName": "Farmer",
     "description": "User with a single holding"
   },
   "defralivestock+fairfield@gmail.com": {
     "sub": "ca73c5f5-2b5e-4944-ac6a-dcc979e6ed10",
     "name": "Fairfield Farmer",
+    "firstName": "Fairfield",
+    "lastName": "Farmer",
     "description": "User with multiple holdings"
   }
 }

@@ -19,6 +19,8 @@ export function buildTokens({ entry, issuer, clientId, signingKey }) {
       exp: now + TOKEN_TTL_SECONDS,
       nonce: entry.nonce,
       name: entry.name,
+      firstName: entry.firstName,
+      lastName: entry.lastName,
       email: entry.email,
       roles: entry.roles
     },

@@ -35,7 +35,13 @@ describe('buildCodeRedirect()', () => {
   test('it stores a single-use code and returns the client redirect', () => {
     // Arrange
     const codeStore = { storeCode: vi.fn() }
-    const user = { sub: 'user-1', name: 'Test Farmer', roles: ['reader'] }
+    const user = {
+      sub: 'user-1',
+      name: 'Test Farmer',
+      firstName: 'Test',
+      lastName: 'Farmer',
+      roles: ['reader']
+    }
     const params = {
       state: 'state-1',
       nonce: 'nonce-1',
@@ -61,6 +67,8 @@ describe('buildCodeRedirect()', () => {
         sub: 'user-1',
         email: 'farmer@example.com',
         name: 'Test Farmer',
+        firstName: 'Test',
+        lastName: 'Farmer',
         roles: ['reader'],
         nonce: 'nonce-1',
         codeChallenge: 'challenge-1',
