@@ -19,5 +19,12 @@
     "firstName": "Fairfield",
     "lastName": "Farmer",
     "description": "User with multiple holdings"
+  },
+  "defralivestock+unapproved@gmail.com": {
+    "sub": "dbf6df81-6a56-4fb8-a88f-1efe8de86819",
+    "name": "Unapproved Farmer",
+    "firstName": "Unapproved",
+    "lastName": "Farmer",
+    "description": "User not on the approved list"
   }
 }
