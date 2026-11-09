@@ -51,7 +51,6 @@
     "@vitest/coverage-v8": "^4.1.9",
     "audit-ci": "^7.1.0",
     "autoprefixer": "^10.5.2",
-    "cheerio": "1.2.0",
     "eslint": "9.39.4",
     "husky": "^9.1.7",
     "jsdom": "29.1.1",
