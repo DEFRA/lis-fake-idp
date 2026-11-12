@@ -28,6 +28,12 @@ export const nunjucksConfig = {
   options: {
     engines: {
       njk: {
+        /**
+         * Compiles a Nunjucks template for hapi-vision.
+         * @param {string} src - the template source
+         * @param {{ environment: nunjucks.Environment }} options - the hapi-vision compile options
+         * @returns {(ctx: object) => string} function that renders the template with a context
+         */
         compile(src, options) {
           const template = nunjucks.compile(src, options.environment)
           return (ctx) => template.render(ctx)
