@@ -1,9 +1,15 @@
+/** @import { Server } from '@hapi/hapi' */
+
 import { config } from '../../../config/config.js'
 import { statusCodes } from '../constants/status-codes.js'
 
 export const serveStaticFiles = {
   plugin: {
     name: 'staticFiles',
+    /**
+     * Registers the static file routes.
+     * @param {Server} server - the Hapi server the plugin is registered on
+     */
     register(server) {
       server.route([
         {
